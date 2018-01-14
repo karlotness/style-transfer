@@ -1,0 +1,5 @@
+# Ignore Numpy data files
+*.npz
+
+# Ignore Emacs scratch files
+*~
