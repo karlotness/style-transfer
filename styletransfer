@@ -1,0 +1,21 @@
+#! /usr/bin/env python3
+from PIL import Image
+import image, model, loader
+
+art = Image.open("art-thumb.jpg")
+img = Image.open("image-thumb.jpg")
+wts = loader.load_weights("vgg16-weights.npz")
+
+a, am = image.convert_image(art)
+i, im = image.convert_image(img)
+
+mod = model.StyleTransfer(wts, a, i)
+mod.init()
+
+for i in range(150):
+    tres = mod.train()
+    print(i, tres)
+
+g = mod.get_image_data()
+gi = image.unconvert_image(g, am)
+gi.save("out.jpg")
