@@ -6,3 +6,7 @@ __pycache__/
 
 # Ignore Emacs scratch files
 *~
+
+# Ignore image files
+*.png
+*.jpg
