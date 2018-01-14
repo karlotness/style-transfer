@@ -6,8 +6,8 @@ VggLayer = namedtuple("VggLayer", ['name', 'weight', 'bias'])
 def load_weights(file_name):
     weights_npz = np.load(file_name)
     layer_nums = set()
-    for file in weights_npz.files:
-        layer_nums.add(file[4:7])
+    for file_name in weights_npz.files:
+        layer_nums.add(file_name[4:7])
     layer_nums = sorted(layer_nums)
     layers = []
     for lnum in layer_nums:
