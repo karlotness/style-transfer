@@ -1,5 +1,8 @@
 # Ignore Numpy data files
 *.npz
 
+# Ignore scratch Python files
+__pycache__/
+
 # Ignore Emacs scratch files
 *~
