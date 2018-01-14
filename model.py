@@ -40,17 +40,13 @@ class Vgg:
                     layer_name = self.layer_names[layer_index]
                     layer_index += 1
                     with tf.name_scope(layer_name) as scope:
-                        conv_result = tf.nn.conv2d(activ, weight,
-                                                   [1, 1, 1, 1],
-                                                   "SAME",
-                                                   name = "conv")
-                        bias_result = tf.add(conv_result, bias,
-                                             name = "bias")
+                        conv_result = tf.nn.conv2d(activ, weight, [1, 1, 1, 1],
+                                                   "SAME", name = "conv")
+                        bias_result = tf.add(conv_result, bias, name = "bias")
                         activations.append(bias_result)
-                        relu_result = tf.nn.relu(bias_result,
-                                                 name = "relu")
+                        relu_result = tf.nn.relu(bias_result, name = "relu")
                         activ = relu_result
                 activ = tf.nn.avg_pool(activ, [1, 2, 2, 1], [1, 2, 2, 1],
                                        "SAME",
-                                       name="pool_{}".format(group_num))
+                                       name = "pool_{}".format(group_num))
         return activations
