@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+# Copyright (c) 2018 Karl Otness
 import argparse, os
 from PIL import Image
 import image, model, loader

@@ -1,3 +1,4 @@
+# Copyright (c) 2018 Karl Otness
 from collections import namedtuple
 import numpy as np
 
