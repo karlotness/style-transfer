@@ -1,5 +1,6 @@
 # Ignore Numpy data files
 *.npz
+*.npz.gz
 
 # Ignore scratch Python files
 __pycache__/
