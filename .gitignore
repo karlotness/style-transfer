@@ -10,3 +10,8 @@ __pycache__/
 # Ignore image files
 *.png
 *.jpg
+
+# Ignore Caffe files
+*.caffemodel
+*.proto
+caffe_pb2.py
