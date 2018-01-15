@@ -1,21 +1,55 @@
 #! /usr/bin/env python3
+import argparse, os
 from PIL import Image
 import image, model, loader
 
-art = Image.open("art-thumb.jpg")
-img = Image.open("image-thumb.jpg")
-wts = loader.load_weights("vgg16-weights.npz")
+def build_parser():
+    parser = argparse.ArgumentParser(description = "Neural-network image style transfer")
+    parser.add_argument('image', type = str,
+                        help = "input image to be re-styled")
+    parser.add_argument('art', type = str,
+                        help = "image from which to draw style")
+    parser.add_argument('out', type = str,
+                        help = "destination for generated image")
+    parser.add_argument('-n', '--niter', type = int, metavar = 'N',
+                        default = 150,
+                        help = "Number of training iterations to run")
+    parser.add_argument('-s', '--stylewt', type = float, metavar = 'S',
+                        default = 1.0,
+                        help = "Weight of style information in training")
+    parser.add_argument('-c', '--contwt', type = float, metavar = 'C',
+                        default = 1E-4,
+                        help = "Weight of content information in training")
+    return parser
 
-a, am = image.convert_image(art)
-i, im = image.convert_image(img)
+def find_weights():
+    import __main__
+    basedir = os.path.dirname(__main__.__file__)
+    return os.path.join(basedir, 'vgg16-weights.npz')
 
-mod = model.StyleTransfer(wts, a, i)
-mod.init()
-
-for i in range(150):
-    tres = mod.train()
-    print(i, tres)
-
-g = mod.get_image_data()
-gi = image.unconvert_image(g, am)
-gi.save("out.jpg")
+# Parse arguments
+parser = build_parser()
+args = parser.parse_args()
+# Load images and model weights
+art = Image.open(args.art)
+img = Image.open(args.image)
+weights = loader.load_weights(find_weights())
+# Convert images to arrays
+art_arr, art_mean = image.convert_image(art)
+img_arr, img_mean = image.convert_image(img)
+# Build transfer model
+model = model.StyleTransfer(weights, art_arr, img_arr,
+                            content_weight = args.contwt,
+                            style_weight = args.stylewt)
+# Run training
+model.init()
+for iter in range(args.niter):
+    train_result = model.train()
+    print("Iter {} of {}. Losses: Total: {} Style: {} Content: {}".format(iter + 1, args.niter,
+                                                                          train_result.total_loss,
+                                                                          train_result.style_loss,
+                                                                          train_result.content_loss))
+# Save generated images
+gen = model.get_image_data()
+gen_img = image.unconvert_image(gen, art_mean)
+gen_img.save(args.out)
