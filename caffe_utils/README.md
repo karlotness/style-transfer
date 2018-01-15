@@ -4,8 +4,8 @@ The weights for the VGG16 and VGG19 models are distributed in
 the convolution kernel and bias values and store them in an `.npz`
 file suitable for reading with [NumPy](http://www.numpy.org/).
 
-The original `.caffemodel` files can be obtained from the These files
-can be obtained from the Visual Geometry Group's
+The original `.caffemodel` files can be obtained from the Visual
+Geometry Group's
 [website](http://www.robots.ox.ac.uk/~vgg/research/very_deep/).
 
 ## Extracted Format
