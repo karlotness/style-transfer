@@ -21,12 +21,16 @@ def build_parser():
     parser.add_argument('-c', '--contwt', type = float, metavar = 'C',
                         default = 1E-4,
                         help = "Weight of content information in training")
+    parser.add_argument('--vgg', type = str, metavar = 'V',
+                        default = '16', choices = ['16', '19'],
+                        help = "The VGG network to use")
     return parser
 
-def find_weights():
+def find_weights(vgg_num):
     import __main__
     basedir = os.path.dirname(__main__.__file__)
-    return os.path.join(basedir, 'vgg16-weights.npz')
+    filename = 'vgg{}-weights.npz'.format(vgg_num)
+    return os.path.join(basedir, filename)
 
 # Parse arguments
 parser = build_parser()
@@ -34,7 +38,7 @@ args = parser.parse_args()
 # Load images and model weights
 art = Image.open(args.art)
 img = Image.open(args.image)
-weights = loader.load_weights(find_weights())
+weights = loader.load_weights(find_weights(args.vgg))
 # Convert images to arrays
 art_arr, art_mean = image.convert_image(art)
 img_arr, img_mean = image.convert_image(img)
