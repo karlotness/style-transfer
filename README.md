@@ -15,8 +15,9 @@ This program depends on [TensorFlow](https://www.tensorflow.org/) and
 [Pillow](http://python-pillow.github.io/). Install these first.
 
 Next, obtain the VGG network weights. Download the `vgg16-weights.npz`
-file and extract it if necessary (if it was distributed gzip
-compressed as a `.npz.gz` file).
+and `vgg19-weights.npz` files and extract them if necessary (if they
+were distributed gzip compressed as `.npz.gz` files). These files are
+available through the GitHub releases.
 
 Finally, clone the repository or otherwise obtain the source code and
 place the `.npz` file next to the `styletransfer` program.
