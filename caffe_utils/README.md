@@ -42,6 +42,7 @@ protoc --python_out=. caffe.proto
 This will produce the `caffe_pb2.py` file needed by this script. Place
 it next to `caffe_convert.py`
 
+## Running
 Run the script by specifying first the input `.caffemodel` file
 followed by the destination `.npz` file name. For example:
 ```
